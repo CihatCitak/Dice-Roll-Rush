@@ -1,78 +1,110 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Inputs;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Singleton
+    public static PlayerController Instance { get { return instance; } }
+    private static PlayerController instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+    #endregion
+
+    [SerializeField] InputSettings inputSettings;
+    [SerializeField] DiceSettings diceSetting;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Transform sideMovementRoot;
-    [SerializeField] private Transform diceModel;
-    [SerializeField] private Transform leftLimit, rightLimit;
-    [SerializeField] private float forwardMovementSpeed = 1f, sideMovementSensitivity = 1f, rotationSpeed = 1f, rightRotateSpeed = 10f;
+    [SerializeField] private float forwardMovementSpeed = 1f, sideMovementSensitivity = 1f;
+    [Header("Partical Effects")]
+    [SerializeField] ParticleSystem levelUpPartical;
+    [SerializeField] ParticleSystem levelDownPartical;
 
-    private Vector2 inputDrag;
-    private Vector2 previousMousePosition;
+    private GameObject currentCharacterModel;
 
-    private float leftLimitX => leftLimit.localPosition.x;
-    private float rightLimitX => rightLimit.localPosition.x;
+    private void Start()
+    {
+        DestroyOldCharacterModel();
+        InstantiateNewCharacterModelInPlayerObject();
+    }
 
     void Update()
     {
-        HandleForwardMovement();
-        HandleInput();
+        if(GameManagement.Instance.GameState == GameManagement.GameStates.START)
+            HandleForwardMovement();
+    }
+
+    public void OnNewLevel(DiceSettings settings, LevelChangeType levelChangeType)
+    {
+        ShowParticalEffectMakeItChildDestroyAfterOneSecond(levelChangeType);
+
+        SetCharacterSettings(settings);
+
+        DestroyOldCharacterModel();
+
+        InstantiateNewCharacterModelInPlayerObject();
     }
 
     private void HandleForwardMovement()
     {
-        //transform.Translate(Vector3.forward * forwardMovementSpeed * Time.deltaTime);
-        
-        rb.velocity = new Vector3(rb.velocity.x + sideMovementSensitivity * inputDrag.x, 0, forwardMovementSpeed);
+        rb.velocity = new Vector3(rb.velocity.x + sideMovementSensitivity * inputSettings.InputDrag.x, 0, forwardMovementSpeed);
+    }
+    private void SetCharacterSettings(DiceSettings settings)
+    {
+        diceSetting = settings;
     }
 
-
-    /*private void HandleSideMovement()
+    private void InstantiateNewCharacterModelInPlayerObject()
     {
-        var localPos = sideMovementRoot.localPosition;
-        localPos += Vector3.right * inputDrag.x * sideMovementSensitivity;
+        currentCharacterModel =
+            Instantiate(diceSetting.DiceModelPrefab, transform.position, transform.rotation);
 
-        localPos.x = Mathf.Clamp(localPos.x, leftLimitX, rightLimitX);
+        currentCharacterModel.transform.parent = transform;
+    }
 
-        sideMovementRoot.localPosition = localPos;
-
-        var moveDirection = Vector3.forward * 0.5f;
-        moveDirection += sideMovementRoot.right * inputDrag.x * sideMovementSensitivity;
-
-        moveDirection.Normalize();
-
-        var targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-
-        sideMovementRoot.rotation = Quaternion.Lerp(sideMovementRoot.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-    }*/
-
-    private void HandleInput()
+    private void ShowParticalEffectMakeItChildDestroyAfterOneSecond(LevelChangeType levelChangeType)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (levelChangeType == LevelChangeType.LEVELUP)
         {
-            previousMousePosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            var deltaMouse = (Vector2)Input.mousePosition - previousMousePosition;
-            inputDrag = deltaMouse;
-            previousMousePosition = Input.mousePosition;
+            levelUpPartical.Play();
         }
         else
         {
-            inputDrag = Vector2.zero;
+            levelDownPartical.Play();
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    var rb = other.attachedRigidbody;
-    //    rb.isKinematic = false;
-    //    other.isTrigger = false;
-    //    rb.velocity = transform.forward * 50f;
-    //}
+    private void DestroyOldCharacterModel()
+    {
+        if (currentCharacterModel != null)
+        {
+            Destroy(currentCharacterModel);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Money"))
+        {
+            StartCoroutine(WaitForCollectMoney());
+        }
+    }
+
+    private IEnumerator WaitForCollectMoney()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        GameManagement.Instance.EarnMoney(diceSetting.MoneyValue);
+    }
 }

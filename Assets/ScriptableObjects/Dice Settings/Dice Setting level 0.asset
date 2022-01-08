@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc79801dfda27a43bf6f6fc6169bb92, type: 3}
+  m_Name: Dice Setting level 0
+  m_EditorClassIdentifier: 
+  DiceModelPrefab: {fileID: 6645501820436749020, guid: 33eabf0dbac3a7244a91ff1b4d6afd4a, type: 3}
+  MoneyValue: 1
+  BonusDiceValue: 1
+  Exp: 10
