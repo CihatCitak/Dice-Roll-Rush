@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class GameManagement : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -22,6 +23,7 @@ public class GameManagement : MonoBehaviour
     }
     #endregion
 
+    #region GameStates
     public enum GameStates
     {
         INMENU,
@@ -32,11 +34,13 @@ public class GameManagement : MonoBehaviour
     public GameStates GameState { get { return gameState; } }
     private GameStates gameState = GameStates.INMENU;
 
-    private int money;
+    private int money, betMoney;
 
     public void StartTheGame()
     {
         gameState = GameStates.START;
+
+        PlayerController.Instance.StartRun();
     }
 
     public void WinTheGame()
@@ -48,6 +52,7 @@ public class GameManagement : MonoBehaviour
     {
         gameState = GameStates.LOSE;
     }
+    #endregion
 
     public void EarnMoney(int moneyValue)
     {
@@ -56,4 +61,41 @@ public class GameManagement : MonoBehaviour
         UIManager.Instance.UpdateMoneyText(money);
     }
 
+    public void StartBet(float moneyPercentage)
+    {
+        float betMoneyTemp = money * (moneyPercentage / 100f);
+        betMoney = (int)betMoneyTemp;
+
+        UIManager.Instance.ShowBetPanel(betMoney);
+
+        PlayerController.Instance.BetStart();
+    }
+
+    public void EndBet()
+    {
+        UIManager.Instance.HideBetPanel();
+
+        PlayerController.Instance.BetEnd();
+
+        betMoney = 0;
+    }
+
+    public void FindWinner(int playerDiceValue, int enemyDiceValue)
+    {
+        if (playerDiceValue > enemyDiceValue)
+        {
+            EarnMoney(betMoney);
+
+        }
+        else if (playerDiceValue < enemyDiceValue)
+        {
+            EarnMoney(-betMoney);
+        }
+        else
+        {
+            EarnMoney(0);
+        }
+
+        EndBet();
+    }
 }

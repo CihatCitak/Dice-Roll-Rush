@@ -6,9 +6,9 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dice Physic Material
+  m_Name: Dice Sphere Physic Material
   dynamicFriction: 1
   staticFriction: 1
-  bounciness: 0.99
+  bounciness: 0
   frictionCombine: 1
   bounceCombine: 1

@@ -7,17 +7,19 @@ TagManager:
   - ExpDown
   - ExpUp
   - Money
+  - Door
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerDice
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Wall
+  - EnemyDice
+  - PickupableObjects
   - 
   - 
   - 

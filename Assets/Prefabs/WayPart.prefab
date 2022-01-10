@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7042261303780820485}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: WayPart
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 7042261304916336638}
   - component: {fileID: 7042261304916336639}
   - component: {fileID: 7042261304916336636}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: WayPartLight
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,9 +141,9 @@ GameObject:
   - component: {fileID: 7042261304975209925}
   - component: {fileID: 7042261304975209922}
   - component: {fileID: 7042261304975209923}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: WayPartDark
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,9 +236,9 @@ GameObject:
   - component: {fileID: 1863560759143854830}
   - component: {fileID: 2330879013654420572}
   - component: {fileID: 8934367316523849007}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: LeftCorner
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,9 +331,9 @@ GameObject:
   - component: {fileID: 2090519117698795772}
   - component: {fileID: 5201334248690724080}
   - component: {fileID: 9110479588345136563}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: RightCorner
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

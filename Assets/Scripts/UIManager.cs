@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject TapToStartPanel;
     [SerializeField] GameObject GameInPanel;
     [SerializeField] Image expImage;
+    [SerializeField] GameObject betPanel;
+    [SerializeField] TextMeshProUGUI betMoneyText;
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject LosePanel;
@@ -68,4 +70,17 @@ public class UIManager : MonoBehaviour
     {
         moneyText.SetText(money.ToString());
     }
+
+    public void ShowBetPanel(int betMoney)
+    {
+        betPanel.SetActive(true);
+
+        betMoneyText.SetText(betMoney.ToString());
+    }
+
+    public void HideBetPanel()
+    {
+        betPanel.SetActive(false);
+    }
+
 }

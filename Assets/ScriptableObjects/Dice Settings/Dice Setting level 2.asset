@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DiceModelPrefab: {fileID: 6645501820436749020, guid: bcf709d0d3bbd5f49836d6fc79041d7d, type: 3}
   MoneyValue: 3
-  BonusDiceValue: 3
+  BonusDiceValue: 2
   Exp: 10
