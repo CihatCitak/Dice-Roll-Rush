@@ -27,11 +27,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42841463813392338}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.42, y: 0, z: 2.55}
+  m_LocalPosition: {x: 6.3945913, y: 12.3958235, z: -13.953751}
   m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children: []
-  m_Father: {fileID: 4594037730891457470}
-  m_RootOrder: 5
+  m_Father: {fileID: 7707454684778035228}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2678324433294654785
 MeshFilter:
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8817953798866380078}
   - component: {fileID: 144782759}
   m_Layer: 8
-  m_Name: DiceRoot
+  m_Name: Dice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,12 +121,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219773028104692709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.42, y: 0.6, z: 2.5499992}
+  m_LocalPosition: {x: 6.3945913, y: 12.995824, z: -13.953751}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 326254693339472848}
-  m_Father: {fileID: 4594037730891457470}
-  m_RootOrder: 4
+  m_Father: {fileID: 7707454684778035228}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8817953798866380078
 BoxCollider:
@@ -189,8 +189,7 @@ Transform:
   - {fileID: 2393730173578836602}
   - {fileID: 2393730175068423554}
   - {fileID: 2393730174705672550}
-  - {fileID: 7552903827315769241}
-  - {fileID: 2625182588948638194}
+  - {fileID: 7707454684778035228}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -213,8 +212,9 @@ MonoBehaviour:
   - {fileID: 2393730175068423555}
   - {fileID: 2393730174705672551}
   diceSetting: {fileID: 11400000, guid: cb26bb508773e83499782adc1e337b41, type: 2}
+  diceRoot: {fileID: 7576837139330154768}
   diceCanvasTransform: {fileID: 326254693339472848}
-  diceRootTransform: {fileID: 7552903827315769241}
+  diceTransform: {fileID: 7552903827315769241}
   diceValuesTexts:
   - {fileID: 6118197812380187982}
   - {fileID: 2065693960681759358}
@@ -226,6 +226,38 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   diceThrowForce: {x: -20, y: 60, z: 0}
+--- !u!1 &7576837139330154768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7707454684778035228}
+  m_Layer: 0
+  m_Name: DiceRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7707454684778035228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576837139330154768}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.974591, y: -12.3958235, z: 16.503754}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7552903827315769241}
+  - {fileID: 2625182588948638194}
+  m_Father: {fileID: 4594037730891457470}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8653599742061382998
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +503,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9005cde57026804d85a4c5dc00db6ad, type: 3}
+--- !u!224 &2651713031122525807 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1953186188985859451, guid: d9005cde57026804d85a4c5dc00db6ad, type: 3}
+  m_PrefabInstance: {fileID: 4600385849361064724}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6118197812380187982 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7728158204254248538, guid: d9005cde57026804d85a4c5dc00db6ad, type: 3}
@@ -537,11 +574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2651713031122525807 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1953186188985859451, guid: d9005cde57026804d85a4c5dc00db6ad, type: 3}
-  m_PrefabInstance: {fileID: 4600385849361064724}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4701404678185861629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -757,6 +789,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c449c1bd65d0d148bd95b426947f861, type: 3}
+--- !u!4 &2393730173578836602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5954711761520568765, guid: 1c449c1bd65d0d148bd95b426947f861, type: 3}
+  m_PrefabInstance: {fileID: 8330355449715676103}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2393730173578836603 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5954711761520568764, guid: 1c449c1bd65d0d148bd95b426947f861, type: 3}
@@ -768,8 +805,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e15fe5768da490438fc6a9caef3be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2393730173578836602 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5954711761520568765, guid: 1c449c1bd65d0d148bd95b426947f861, type: 3}
-  m_PrefabInstance: {fileID: 8330355449715676103}
-  m_PrefabAsset: {fileID: 0}

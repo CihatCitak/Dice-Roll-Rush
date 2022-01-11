@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dice Setting level 4
   m_EditorClassIdentifier: 
   DiceModelPrefab: {fileID: 6645501820436749020, guid: db92c9cb1b2212440a700498fe5916fb, type: 3}
-  MoneyValue: 5
+  MoneyValue: 4
   BonusDiceValue: 3
   Exp: 10

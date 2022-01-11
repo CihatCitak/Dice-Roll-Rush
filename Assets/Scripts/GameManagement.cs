@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour
 {
+    [SerializeField] GameObject confetti;
+
     #region Singleton
     private static GameManagement instance;
     public static GameManagement Instance { get { return instance; } }
@@ -85,17 +88,33 @@ public class GameManagement : MonoBehaviour
         if (playerDiceValue > enemyDiceValue)
         {
             EarnMoney(betMoney);
-
+            UIManager.Instance.WinTheBet();
         }
         else if (playerDiceValue < enemyDiceValue)
         {
             EarnMoney(-betMoney);
+            UIManager.Instance.LoseTheBet();
         }
         else
         {
             EarnMoney(0);
+            UIManager.Instance.DrawTheBet();
         }
 
         EndBet();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            WinTheGame();
+
+            PlayerController.Instance.DiceGoToMiddlePosition(0.25f).OnComplete(() => confetti.SetActive(true));
+
+            PlayerController.Instance.EndTheGame();
+
+            UIManager.Instance.WinTheGame();
+        }
     }
 }

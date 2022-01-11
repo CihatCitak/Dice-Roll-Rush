@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,13 +27,17 @@ public class UIManager : MonoBehaviour
     #endregion
 
     [SerializeField] GameObject TapToStartPanel;
+    [SerializeField] GameObject WinPanel;
+    [SerializeField] GameObject LosePanel;
     [SerializeField] GameObject GameInPanel;
     [SerializeField] Image expImage;
+    [Header("Bet Panel")]
     [SerializeField] GameObject betPanel;
     [SerializeField] TextMeshProUGUI betMoneyText;
     [SerializeField] TextMeshProUGUI moneyText;
-    [SerializeField] GameObject WinPanel;
-    [SerializeField] GameObject LosePanel;
+    [SerializeField] GameObject betWinText;
+    [SerializeField] GameObject betLoseText;
+    [SerializeField] GameObject betDrawText;
 
     public void StartTheGame()
     {
@@ -80,7 +85,36 @@ public class UIManager : MonoBehaviour
 
     public void HideBetPanel()
     {
-        betPanel.SetActive(false);
+
+
+        StartCoroutine(SetFalseBetTextsSetActive());
     }
 
+    public void WinTheBet()
+    {
+        betWinText.SetActive(true);
+    }
+
+    public void LoseTheBet()
+    {
+        betLoseText.SetActive(true);
+    }
+
+    public void DrawTheBet()
+    {
+        betDrawText.SetActive(true);
+    }
+
+    private IEnumerator SetFalseBetTextsSetActive()
+    {
+        yield return new WaitForSeconds(2f);
+
+        betPanel.SetActive(false);
+
+        betDrawText.SetActive(false);
+
+        betWinText.SetActive(false);
+
+        betLoseText.SetActive(false);
+    }
 }

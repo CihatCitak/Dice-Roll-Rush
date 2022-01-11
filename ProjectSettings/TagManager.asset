@@ -9,6 +9,7 @@ TagManager:
   - Money
   - Door
   - Ground
+  - GearObstacle
   layers:
   - Default
   - TransparentFX

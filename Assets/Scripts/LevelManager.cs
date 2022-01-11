@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
     private int currentExp, maxExp, currentLevel, maxLevel;
 
     private const int EXPUP_VALUE = 2;
-    private const int EXPDOWN_VALUE = -2;
+    private const int EXPDOWN_VALUE = -1;
 
     void Start()
     {
@@ -58,7 +58,18 @@ public class LevelManager : MonoBehaviour
             OnPickupObject(EXPDOWN_VALUE);
             Destroy(other.gameObject);
         }
+        
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("GearObstacle"))
+        {
+            OnPickupObject(EXPDOWN_VALUE * 2);
+            //Destroy(other.gameObject);
+        }
+    }
+
 
     #region  PickupObject Issues
     //Pickup the object object can be positive or negative

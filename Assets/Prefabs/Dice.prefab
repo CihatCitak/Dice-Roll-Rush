@@ -157,8 +157,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputSettings: {fileID: 11400000, guid: ff2e42bd84d9d8a41a21083f0eba0709, type: 2}
   rb: {fileID: 4547268820176079869}
-  forwardMovementSpeed: 600
-  sideMovementSensitivity: 300
+  forwardMovementSpeed: 7.5
+  sideMovementSensitivity: 7.5
   diceSetting: {fileID: 11400000, guid: 0f9ab9328709a1146b30868b4761ed17, type: 2}
   diceCanvas: {fileID: 5017631265342147068}
   diceValuesTexts:

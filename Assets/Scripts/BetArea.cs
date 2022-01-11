@@ -10,7 +10,8 @@ public class BetArea : MonoBehaviour
     [SerializeField] List<Door> doors;
     [Header("Dice Settings")]
     [SerializeField] DiceSettings diceSetting;
-    [SerializeField] Transform diceCanvasTransform, diceRootTransform;
+    [SerializeField] GameObject diceRoot;
+    [SerializeField] Transform diceCanvasTransform, diceTransform;
     [SerializeField] List<TextMeshProUGUI> diceValuesTexts;
     [SerializeField] LayerMask layerMask;
     [SerializeField] Vector3 diceThrowForce = Vector3.one;
@@ -52,17 +53,19 @@ public class BetArea : MonoBehaviour
     private void InstantiateNewCharacterModelInPlayerObject()
     {
         currentCharacterModel =
-            Instantiate(diceSetting.DiceModelPrefab, diceRootTransform.position, diceRootTransform.rotation);
+            Instantiate(diceSetting.DiceModelPrefab, diceTransform.position, diceTransform.rotation);
 
-        currentCharacterModel.transform.parent = diceRootTransform;
+        currentCharacterModel.transform.parent = diceTransform;
     }
 
     private IEnumerator ThrowDice()
     {
         yield return new WaitForSeconds(0f);
 
+        diceRoot.SetActive(true);
+
         isThrowed = true;
-        //rb.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
         rb.AddForce(diceThrowForce, ForceMode.VelocityChange);
         rb.AddTorque(new Vector3(Random.Range(-2000f, 2000f), 0, 2000f));
     }

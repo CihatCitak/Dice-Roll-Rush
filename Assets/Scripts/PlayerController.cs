@@ -25,13 +25,26 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region DiceStates
     public enum DiceStates
     {
         START,
         RUN,
-        INBET
+        INBET,
+        GAMEEND
     }
     private DiceStates diceState;
+
+    public void StartRun()
+    {
+        diceState = DiceStates.RUN;
+    }
+
+    public void EndTheGame()
+    {
+        diceState = DiceStates.GAMEEND;
+    }
+    #endregion
 
     [SerializeField] InputSettings inputSettings;
     [Header("Movement")]
@@ -63,31 +76,29 @@ public class PlayerController : MonoBehaviour
         InstantiateNewCharacterModelInPlayerObject();
     }
 
-    public void StartRun()
+
+    private void Update()
     {
-        diceState = DiceStates.RUN;
-    }
-
-
-    void Update()
-    {
-        if (diceState == DiceStates.RUN)
-            HandleForwardMovement();
-
         if (diceState == DiceStates.INBET)
         {
             if (rb.velocity == Vector3.zero && rb.angularVelocity == Vector3.zero && !isValueFound && isThrowed)
             {
                 //Find dice value create blocks 
-                StartCoroutine(FindDiceValue());
+                StartCoroutine(FindDiceValueAndWinner());
             }
         }
     }
 
+    void FixedUpdate()
+    {
+        if (diceState == DiceStates.RUN)
+            HandleForwardMovement();
+    }
+
     private void HandleForwardMovement()
     {
-        rb.velocity = new Vector3(rb.velocity.x + sideMovementSensitivity * inputSettings.InputDrag.x * Time.deltaTime, 0,
-            forwardMovementSpeed * Time.deltaTime);
+        rb.velocity = new Vector3(rb.velocity.x + sideMovementSensitivity * inputSettings.InputDrag.x, 0,
+            forwardMovementSpeed);
     }
 
     #region LevelIssues
@@ -145,7 +156,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetDiceValues(int diceBonusValue)
     {
-        for (int i = 0; i < diceValues.Length - 1; i++)
+        for (int i = 0; i < diceValues.Length; i++)
         {
             diceValues[i] += diceBonusValue;
         }
@@ -153,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetDiceValueTexts()
     {
-        for (int i = 0; i < diceValues.Length - 1; i++)
+        for (int i = 0; i < diceValues.Length; i++)
         {
             diceValuesTexts[i].SetText(diceValues[i].ToString());
         }
@@ -179,16 +190,6 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-
-    private void OnTriggerExit(Collider other)
-    {
-
-        if (other.CompareTag("Door"))
-        {
-            Debug.Log("We Pass the door");
-        }
-    }
-
     public void BetStart()
     {
         diceState = DiceStates.INBET;
@@ -197,7 +198,7 @@ public class PlayerController : MonoBehaviour
 
         boxCollider.enabled = true;
 
-        transform.DOLocalMoveX(0f, .5f).OnComplete(() => ThrowDice());
+        DiceGoToMiddlePosition(0.5f);
     }
 
     public void BetEnd()
@@ -209,16 +210,21 @@ public class PlayerController : MonoBehaviour
         boxCollider.enabled = false;
     }
 
+    public Tween DiceGoToMiddlePosition(float duration)
+    {
+        return transform.DOLocalMoveX(0f, duration).OnComplete(() => ThrowDice());
+    }
+
     #region DiceIssues
     private void ThrowDice()
     {
-        isThrowed = true;
+        isValueFound = false; isThrowed = true;
         rb.velocity = Vector3.zero;
         rb.AddForce(diceThrowForce, ForceMode.VelocityChange);
         rb.AddTorque(new Vector3(Random.Range(-2000f, 2000f), 0, 2000f));
     }
 
-    private IEnumerator FindDiceValue()
+    private IEnumerator FindDiceValueAndWinner()
     {
         yield return new WaitForSeconds(0f);
 
@@ -263,6 +269,8 @@ public class PlayerController : MonoBehaviour
             diceValue = 0;
             Debug.Log(diceValue);
         }
+
+        StartCoroutine(FindWinner(diceValue, enemyDiceValue));
     }
 
     private bool DrawRayFromDiceCenterAndCheckGroundTouch(Vector3 direction)
@@ -284,13 +292,13 @@ public class PlayerController : MonoBehaviour
             this.enemyDiceValue = enemyDiceValue;
             lastBetarea = betArea;
 
-            StartCoroutine(FindWinner(diceValue, enemyDiceValue));
+            //StartCoroutine(FindWinner(diceValue, enemyDiceValue));
         }
     }
 
     private IEnumerator FindWinner(int playerDiceValue, int enemyDiceValue)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         GameManagement.Instance.FindWinner(playerDiceValue, enemyDiceValue);
     }
